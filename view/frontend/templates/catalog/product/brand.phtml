@@ -1,0 +1,24 @@
+<?php
+$_brand = $block->getBrand();
+$_helper    = $this->helper(O2TI\ShopByBrand\Helper\Output::class);
+?>
+<span class="product-brand" >
+	<?php if($url = $_brand->getIdentifier()):?>
+		<a href="<?= $this->getUrl($url) ?>">
+			
+			<?php if ($_imgUrl = $_brand->getImage()) {
+		        $_imgHtml = '<div class="brand-image"><img src="'
+		            . $_helper->getImageUrl($block->escapeUrl($_imgUrl))
+		            . '" alt="'
+		            . $block->escapeHtmlAttr($_brand->getTitle())
+		            . '" title="'
+		            . $block->escapeHtmlAttr($_brand->getTitle())
+		            . '" class="image" /></div>';
+		        $_imgHtml = $_helper->brandAttribute($_brand, $_imgHtml, 'image');
+		        /* @noEscape */ echo $_imgHtml;
+		    } else {
+		    	echo $_brand->getTitle();
+		    } ?>
+		</a>
+	<?php endif;?>
+</span>

@@ -1,0 +1,26 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+
+/**
+ * Brand view template
+ *
+ * @var $block \O2TI\ShopByBrand\Block\Page
+ */
+?>
+<?php if ($_content = $block->getCurrentBrand()->getContent()) :?>
+<?php  $_helper    = $this->helper(O2TI\ShopByBrand\Helper\Output::class); ?>
+<?php  $_brand  = $block->getCurrentBrand(); ?>
+    <div class="brand-content">
+        <?=  $_helper->brandAttribute(
+            $_brand,
+            $_content,
+            'content'
+        ) ?>
+    </div>
+<?php endif; ?>

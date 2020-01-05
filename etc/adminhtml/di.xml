@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="O2TI\ShopByBrand\Block\Adminhtml\Page\Grid\Renderer\Action\UrlBuilder">
+        <arguments>
+            <argument name="frontendUrlBuilder" xsi:type="object">Magento\Framework\Url</argument>
+        </arguments>
+    </type>
+    <type name="O2TI\ShopByBrand\ViewModel\Page\Grid\UrlBuilder">
+        <arguments>
+            <argument name="frontendUrlBuilder" xsi:type="object">Magento\Framework\Url</argument>
+        </arguments>
+    </type>
+    <virtualType name="O2TI\ShopByBrand\Ui\Component\Form\Field\PageLayout" type="Magento\Ui\Component\Form\Field\DefaultValue">
+        <arguments>
+            <argument name="path" xsi:type="string">web/default_layouts/default_brand_layout</argument>
+        </arguments>
+    </virtualType>
+</config>

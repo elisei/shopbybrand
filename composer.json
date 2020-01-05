@@ -1,0 +1,17 @@
+{
+    "name": "o2ti/shopbybrand",
+    "description": "O2TI Shop By Brand",
+    "authors": [
+        {
+            "name": "Elisei",
+            "email": "elisei@o2ti.com"
+        }
+    ],
+    "type": "magento2-module",
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "O2TI\\ShopByBrand\\": ""
+        }
+    }
+}

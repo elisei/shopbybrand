@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+    	<attribute name="class" value="page-products"/>
+    	<referenceContainer name="columns.top">
+            <container name="brand.view.container" htmlTag="div" htmlClass="brand-view" after="-">
+                <block class="O2TI\ShopByBrand\Block\Page" name="brand.image" template="O2TI_ShopByBrand::catalog/brand/image.phtml"/>
+                <block class="O2TI\ShopByBrand\Block\Page" name="brand.description" template="O2TI_ShopByBrand::catalog/brand/description.phtml"/>
+            </container>
+        </referenceContainer>
+
+        <referenceContainer name="content">
+
+           	<block class="O2TI\ShopByBrand\Block\Page" name="brand.products" template="O2TI_ShopByBrand::catalog/brand/products.phtml">
+           		 <block class="O2TI\ShopByBrand\Block\Brand\View\ListProduct" name="product_list" after="-" template="Magento_Catalog::product/list.phtml">
+					    <container name="category.product.list.additional" as="additional" />
+	                    <block class="Magento\Framework\View\Element\RendererList" name="category.product.type.details.renderers" as="details.renderers">
+	                        <block class="Magento\Framework\View\Element\Template" name="category.product.type.details.renderers.default" as="default"/>
+	                    </block>
+	                    <block class="Magento\Catalog\Block\Product\ProductList\Item\Container" name="category.product.addto" as="addto">
+	                        <block class="Magento\Catalog\Block\Product\ProductList\Item\AddTo\Compare"
+	                               name="category.product.addto.compare" as="compare"
+	                               template="Magento_Catalog::product/list/addto/compare.phtml"/>
+	                    </block>
+	                    <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar" template="Magento_Catalog::product/list/toolbar.phtml">
+	                        <block class="Magento\Theme\Block\Html\Pager" name="product_list_toolbar_pager"/>
+	                    </block>
+	                    <action method="setToolbarBlockName">
+	                        <argument name="name" xsi:type="string">product_list_toolbar</argument>
+	                    </action>
+					</block>
+           	</block>
+           	 <block class="Magento\Cookie\Block\RequireCookie" name="require-cookie" template="Magento_Cookie::require_cookie.phtml">
+                <arguments>
+                    <argument name="triggers" xsi:type="array">
+                        <item name="compareProductLink" xsi:type="string">.action.tocompare</item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="sidebar.main">
+            <block class="O2TI\ShopByBrand\Block\Brand\View\Navigation" name="catalog.leftnav" as="navigation" before="-" template="Magento_LayeredNavigation::layer/view.phtml">
+                <block class="O2TI\ShopByBrand\Block\Brand\View\Navigation\State" name="catalog.navigation.state" as="state" template="Magento_LayeredNavigation::layer/state.phtml" />
+                <block class="Magento\LayeredNavigation\Block\Navigation\FilterRenderer" name="catalog.navigation.renderer" as="renderer" template="Magento_LayeredNavigation::layer/filter.phtml"/>
+            </block>
+        </referenceContainer>
+    </body>
+</page>
+
+

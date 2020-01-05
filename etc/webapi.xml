@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <!-- Cms Page -->
+    <route url="/V1/brandPage/:pageId" method="GET">
+        <service class="O2TI\ShopByBrand\Api\PageRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="O2TI_ShopByBrand::page"/>
+        </resources>
+    </route>
+     <route url="/V1/brandPage/:attributeId" method="GET">
+        <service class="O2TI\ShopByBrand\Api\PageRepositoryInterface" method="getByAttributeId"/>
+        <resources>
+            <resource ref="O2TI_ShopByBrand::page"/>
+        </resources>
+    </route>
+    <route url="/V1/brandPage/search" method="GET">
+        <service class="O2TI\ShopByBrand\Api\PageRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="O2TI_ShopByBrand::page"/>
+        </resources>
+    </route>
+    <route url="/V1/brandPage" method="POST">
+        <service class="O2TI\ShopByBrand\Api\PageRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="O2TI_ShopByBrand::page"/>
+        </resources>
+    </route>
+    <route url="/V1/brandPage/:id" method="PUT">
+        <service class="O2TI\ShopByBrand\Api\PageRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="O2TI_ShopByBrand::page"/>
+        </resources>
+    </route>
+    <route url="/V1/brandPage/:pageId" method="DELETE">
+        <service class="O2TI\ShopByBrand\Api\PageRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="O2TI_ShopByBrand::page"/>
+        </resources>
+    </route>
+</routes>

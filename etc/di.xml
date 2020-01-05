@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Magento\Sitemap\Model\Sitemap" type="O2TI\ShopByBrand\Model\Sitemap"/>
+    <preference for="O2TI\ShopByBrand\Api\Data\PageSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults" />
+    <preference for="O2TI\ShopByBrand\Api\GetPageByIdentifierInterface" type="O2TI\ShopByBrand\Model\GetPageByIdentifier" />
+    <preference for="O2TI\ShopByBrand\Api\Data\PageInterface" type="O2TI\ShopByBrand\Model\Page" />
+    <preference for="O2TI\ShopByBrand\Api\PageRepositoryInterface" type="O2TI\ShopByBrand\Model\PageRepository\ValidationComposite" />
+
+    <preference for="O2TI\ShopByBrand\Api\GetUtilityPageIdentifiersInterface" type="O2TI\ShopByBrand\Model\GetUtilityPageIdentifiers" />
+    
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="brand_page_listing_data_source" xsi:type="string">O2TI\ShopByBrand\Model\ResourceModel\Page\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="O2TI\ShopByBrand\Model\ResourceModel\Page\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">brand_page</argument>
+            <argument name="eventPrefix" xsi:type="string">brand_page_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">page_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">O2TI\ShopByBrand\Model\ResourceModel\Page</argument>
+        </arguments>
+    </type>
+    <virtualType name="BrandGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\Model\Entity\RepositoryFactory">
+        <arguments>
+            <argument name="entities" xsi:type="array">
+                <item name="O2TI\ShopByBrand\Api\Data\PageInterface" xsi:type="string">O2TI\ShopByBrand\Api\PageRepositoryInterface</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\EntityManager\MetadataPool">
+        <arguments>
+            <argument name="metadata" xsi:type="array">
+                <item name="O2TI\ShopByBrand\Api\Data\PageInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="string">brand_page</item>
+                    <item name="identifierField" xsi:type="string">page_id</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\EntityManager\Operation\ExtensionPool">
+        <arguments>
+            <argument name="extensionActions" xsi:type="array">
+                <item name="O2TI\ShopByBrand\Api\Data\PageInterface" xsi:type="array">
+                    <item name="read" xsi:type="array">
+                        <item name="storeReader" xsi:type="string">O2TI\ShopByBrand\Model\ResourceModel\Page\Relation\Store\ReadHandler</item>
+                    </item>
+                    <item name="create" xsi:type="array">
+                        <item name="storeCreator" xsi:type="string">O2TI\ShopByBrand\Model\ResourceModel\Page\Relation\Store\SaveHandler</item>
+                    </item>
+                    <item name="update" xsi:type="array">
+                        <item name="storeUpdater" xsi:type="string">O2TI\ShopByBrand\Model\ResourceModel\Page\Relation\Store\SaveHandler</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\EntityManager\HydratorPool">
+        <arguments>
+            <argument name="hydrators" xsi:type="array">
+                <item name="O2TI\ShopByBrand\Api\Data\PageInterface" xsi:type="string">Magento\Framework\EntityManager\AbstractModelHydrator</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="O2TI\ShopByBrand\Model\Api\SearchCriteria\CollectionProcessor\PageFilterProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor">
+        <arguments>
+            <argument name="customFilters" xsi:type="array">
+                <item name="store_id" xsi:type="object">O2TI\ShopByBrand\Model\Api\SearchCriteria\CollectionProcessor\FilterProcessor\PageStoreFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="O2TI\ShopByBrand\Model\Api\SearchCriteria\PageCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="filters" xsi:type="object">O2TI\ShopByBrand\Model\Api\SearchCriteria\CollectionProcessor\PageFilterProcessor</item>
+                <item name="sorting" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>
+                <item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="O2TI\ShopByBrand\Model\PageRepository">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">O2TI\ShopByBrand\Model\Api\SearchCriteria\PageCollectionProcessor</argument>
+        </arguments>
+    </type>
+    <type name="O2TI\ShopByBrand\Ui\Component\DataProvider">
+        <arguments>
+            <argument name="additionalFilterPool" xsi:type="array">
+                <item name="fulltext" xsi:type="object">O2TI\ShopByBrand\Ui\Component\Page\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- <type name="O2TI\ShopByBrand\Model\Product">
+        <plugin name="brand" type="O2TI\ShopByBrand\Model\Plugin\Product" sortOrder="100"/>
+    </type> -->
+    <type name="O2TI\ShopByBrand\Model\PageRepository\ValidationComposite">
+        <arguments>
+            <argument name="repository" xsi:type="object">O2TI\ShopByBrand\Model\PageRepository</argument>
+            <argument name="validators" xsi:type="array">
+                <item name="layout_update" xsi:type="object">O2TI\ShopByBrand\Model\PageRepository\Validator\LayoutUpdateValidator</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="O2TI\ShopByBrand\PageImageUpload" type="O2TI\ShopByBrand\Model\ImageUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">brand/tmp/logo</argument>
+            <argument name="basePath" xsi:type="string">brand/logo</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+                <item name="webp" xsi:type="string">webp</item>
+                <item name="svg" xsi:type="string">svg</item>
+            </argument>
+            <argument name="allowedMimeTypes" xsi:type="array">
+                <item name="jpg" xsi:type="string">image/jpg</item>
+                <item name="jpeg" xsi:type="string">image/jpeg</item>
+                <item name="gif" xsi:type="string">image/gif</item>
+                <item name="png" xsi:type="string">image/png</item>
+                <item name="webp" xsi:type="string">image/webp</item>
+                <item name="svg" xsi:type="string">image/svg</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="O2TI\ShopByBrand\Controller\Adminhtml\Page\Image\Upload">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">O2TI\ShopByBrand\PageImageUpload</argument>
+        </arguments>
+    </type>
+
+</config>

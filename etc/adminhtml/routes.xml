@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 O2TI. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../lib/internal/Magento/Framework/App/etc/routes.xsd">
+    <router id="admin">
+        <route id="o2ti_shopbybrand" frontName="o2ti_shopbybrand">
+            <module name="O2TI_ShopByBrand" />
+        </route>
+        <route id="brand" frontName="brand">
+            <module name="O2TI_ShopByBrand" before="Magento_Backend" />
+        </route>
+    </router>
+
+</config>

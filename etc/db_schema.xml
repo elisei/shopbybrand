@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    
+    <table name="brand_page" resource="default" engine="innodb" comment="Brand Table">
+        <column xsi:type="smallint" name="page_id" padding="6" unsigned="false" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="varchar" name="attribute_id" nullable="true" length="100" comment="Attribut Identifier"/>
+        <column xsi:type="timestamp" name="creation_time" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Page Creation Time"/>
+        <column xsi:type="timestamp" name="update_time" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Page Modification Time"/>
+        <column xsi:type="smallint" name="is_active" padding="6" unsigned="false" nullable="false" identity="false"
+                default="1" comment="Is Page Active"/>
+        <column xsi:type="varchar" name="title" nullable="true" length="255" comment="Page Title"/>
+        <column xsi:type="smallint" name="is_featured" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Is featured"/>
+        <column xsi:type="varchar" name="image" nullable="true" length="255" comment="Image Brand"/>
+        <column xsi:type="mediumtext" name="content" nullable="true" comment="Page Content"/>
+        <column xsi:type="varchar" name="identifier" nullable="true" length="100" comment="Page String Identifier"/>
+        <column xsi:type="varchar" name="meta_title" nullable="true" length="255" comment="Page Meta Title"/>
+        <column xsi:type="text" name="meta_keywords" nullable="true" comment="Page Meta Keywords"/>
+        <column xsi:type="text" name="meta_description" nullable="true" comment="Page Meta Description"/>
+        <column xsi:type="varchar" name="page_layout" nullable="true" length="255" comment="Page Layout"/>
+        <column xsi:type="text" name="layout_update_xml" nullable="true" comment="Page Layout Update Content"/>
+        <column xsi:type="varchar" name="custom_theme" nullable="true" length="100" comment="Page Custom Theme"/>
+        <column xsi:type="varchar" name="custom_root_template" nullable="true" length="255"
+                comment="Page Custom Template"/>
+        <column xsi:type="text" name="custom_layout_update_xml" nullable="true"
+                comment="Page Custom Layout Update Content"/>
+        <column xsi:type="date" name="custom_theme_from" comment="Page Custom Theme Active From Date" nullable="true"/>
+        <column xsi:type="date" name="custom_theme_to" comment="Page Custom Theme Active To Date" nullable="true"/> 
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="page_id"/>
+        </constraint>
+        <index referenceId="BRAND_PAGE_IDENTIFIER_ATTRIBUTE_ID" indexType="btree">
+            <column name="identifier"/>
+            <column name="attribute_id"/>
+        </index>
+        <index referenceId="BRAND_PAGE_TITLE_META_KEYWORDS_META_DESCRIPTION_IDENTIFIER_ATTRIBUTE_ID_CONTENT_IMAGE" indexType="fulltext">
+            <column name="title"/>
+            <column name="meta_keywords"/>
+            <column name="meta_description"/>
+            <column name="identifier"/>
+            <column name="attribute_id"/>
+            <column name="content"/>
+            <column name="image"/>
+        </index>
+    </table>
+    <table name="brand_page_store" resource="default" engine="innodb" comment="Brand Page To Store Linkage Table">
+        <column xsi:type="smallint" name="page_id" padding="6" unsigned="false" nullable="false" identity="false"
+                comment="Entity ID"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false"
+                comment="Store ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="page_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="BRAND_PAGE_STORE_PAGE_ID_BRAND_PAGE_PAGE_ID" table="brand_page_store"
+                    column="page_id" referenceTable="brand_page" referenceColumn="page_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="BRAND_PAGE_STORE_STORE_ID_STORE_STORE_ID" table="brand_page_store"
+                    column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE"/>
+        <index referenceId="BRAND_PAGE_STORE_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+    </table>
+</schema>

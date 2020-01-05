@@ -1,0 +1,33 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * Brand view template
+ *
+ * @var $block \O2TI\ShopByBrand\Block\Brand\View
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+// phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
+// phpcs:disable Magento2.Security.LanguageConstruct.DirectOutput
+?>
+<?php
+    $_helper    = $this->helper(O2TI\ShopByBrand\Helper\Output::class);
+    $_brand  = $block->getCurrentBrand();
+    $_imgHtml   = '';
+    if ($_imgUrl = $_brand->getImage()) {
+        $_imgHtml = '<div class="brand-image"><img src="'
+            . $_helper->getImageUrl($block->escapeUrl($_imgUrl))
+            . '" alt="'
+            . $block->escapeHtmlAttr($_brand->getTitle())
+            . '" title="'
+            . $block->escapeHtmlAttr($_brand->getTitle())
+            . '" class="image" /></div>';
+        $_imgHtml = $_helper->brandAttribute($_brand, $_imgHtml, 'image');
+        /* @noEscape */ echo $_imgHtml;
+    }
+?>

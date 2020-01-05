@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../app/code/Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="O2TI_ShopByBrand::brand_page" title="Brand Page" translate="title" module="O2TI_ShopByBrand" sortOrder="31" parent="O2TI_ShopByBrand::brand" dependsOnModule="Magento_Catalog" action="brand/page" resource="O2TI_ShopByBrand::page"/>
+        <add id="O2TI_ShopByBrand::brand" title="Brand's" translate="title" module="Magento_Catalog" sortOrder="30" parent="Magento_Catalog::catalog" dependsOnModule="Magento_Catalog" resource="Magento_Catalog::catalog"/>
+    </menu>
+</config>
